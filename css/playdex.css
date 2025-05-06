@@ -1,0 +1,92 @@
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 20px;
+    border-radius: 12px;
+    bottom: 20px;
+    font-size: 1.2rem;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  /* Animación opcional */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #slider {
+    max-height: 400px; /* Ajusta según necesites */
+    max-width: 75%;
+    overflow: hidden;
+    margin: 0 auto; /* Centra el carrusel */
+  }
+
+  #slider img {
+    max-height: 400px;
+    object-fit: cover;
+    width: 100%;
+    object-position: top;
+    margin: 0;
+    padding: 0;
+  }
+
+  .user {
+    background: none;
+	border: none;
+	display: inline-block;
+	padding: 0;
+	outline: none;
+	outline-offset: 0;
+	cursor: pointer;
+	-webkit-appearance: none;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .user:hover {
+    transform: scale(1.2);
+  }
+
+  .sidebar {
+    padding: 10px;
+  }
+
+  .containerJuegos {
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction: row;
+  }
+
+  .juego {
+    width: 25%;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .juego:hover {
+    transform: scale(1.05);
+  }
+
+  .juego img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .filtros {
+    margin-left: 15px;
+    border: 1px solid transparent;
+    background: linear-gradient(#fff, #fff) padding-box, 
+                linear-gradient(to right, #64aee5, #4c2882) border-box;
+  }
+
+  .tituloFiltros {
+    background: linear-gradient(to right, #64aee5, #4c2882);
+  }
