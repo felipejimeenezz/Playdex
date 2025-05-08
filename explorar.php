@@ -52,11 +52,11 @@ $conexion = connect_bbdd();
                   <div class="rd-navbar-nav-wrap">
                     <!-- RD Navbar Nav-->
                     <ul class="rd-navbar-nav">
-                      <li class="rd-nav-item active" id="index"><a class="rd-nav-link" href="index.php">Home</a>
+                      <li class="rd-nav-item" id="index"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
                       <li class="rd-nav-item" id="info"><a class="rd-nav-link" href="info.html">Info</a>
                       </li>
-                      <li class="rd-nav-item" id="explorar"><a class="rd-nav-link" href="explorar.php">Explorar</a>
+                      <li class="rd-nav-item active" id="explorar"><a class="rd-nav-link" href="explorar.php">Explorar</a>
                       </li>
                     </ul>
                   </div>
@@ -73,9 +73,12 @@ $conexion = connect_bbdd();
         </div>
       </header>
 
+      <section class="section section-bredcrumbs" style="position: relative; overflow: hidden;">
+        <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+          <source src="videos/explorarfondo.mp4" type="video/mp4">
+        </video>
 
-      <section class="section section-bredcrumbs" style="background: #212121;">
-        <div class="container context-dark breadcrumb-wrapper text-left">
+        <div class="container context-dark breadcrumb-wrapper text-left" style="position: relative;">
           <h1>Explorar</h1>
           <br>
         </div>
@@ -91,7 +94,42 @@ $conexion = connect_bbdd();
                   <h6 class="text-center text-white">Géneros</h6>
                 </div>
 
-                <h6 class="text-center">Acción</h6>
+                <?php
+                $generos = mysqli_query($conexion, "SELECT * FROM `genero`");
+                foreach ($generos as $genero) {
+                  $id_genero = $genero['id'];
+                  $nombre = $genero['nombre'];
+                ?>
+                <div class="form-check ml-2">
+                  <input class="form-check-input" value="<?php echo $id_genero ?>" type="checkbox" value="">
+                  <label class="form-check-label" for="flexCheckDefault"><?php echo $nombre ?></label>
+                </div>
+                <?php
+                }
+                ?>
+
+              </div>
+
+              <div class="filtros mt-4">
+
+                  <div class="tituloFiltros">
+                    <h6 class="text-center text-white">Plataformas</h6>
+                  </div>
+
+                  <?php
+                  $plataformas = mysqli_query($conexion, "SELECT * FROM `plataforma`");
+                  foreach ($plataformas as $plataforma) {
+                    $id_plataforma = $plataforma['id'];
+                    $nombre = $plataforma['nombre'];
+                  ?>
+                  <div class="form-check ml-2">
+                    <input class="form-check-input" value="<?php echo $id_plataforma ?>" type="checkbox" value="">
+                    <label class="form-check-label" for="flexCheckDefault"><?php echo $nombre ?></label>
+                  </div>
+                  <?php
+                  }
+                  ?>
+
               </div>
           </aside>
 
@@ -103,14 +141,16 @@ $conexion = connect_bbdd();
             $juegos = mysqli_query($conexion, "SELECT * FROM `juego`");
 
             foreach ($juegos as $juego) {
-              $id = $juego['id'];
+              $id_juego = $juego['id'];
               $portada = $juego['url_img'];
               $nombre = $juego['nombre'];
 
             ?>
-            <div class="juego">
-              <img src="<?php echo $portada; ?>" alt="<?php echo $nombre; ?>">
-              <h5 class="text-center"><?php echo $nombre; ?></h5>
+            <div class="juego" id="<?php echo $id_juego ?>">
+              <a href="juegoinfo.php?id=<?php echo $id_juego; ?>">
+                <img src="<?php echo $portada; ?>" alt="<?php echo $nombre; ?>">
+                <h5 class="text-center"><?php echo $nombre; ?></h5>
+              </a>
             </div>
             <?php
             }
