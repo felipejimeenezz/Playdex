@@ -7,8 +7,6 @@ class Usuario {
     private $email;
     private $contrasena;
 
-    private $colecciones = [];
-
     public function __construct($id, $nombre, $email, $contrasena) {
         $this->id = $id;
         $this->nombre = $nombre;

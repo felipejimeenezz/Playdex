@@ -119,6 +119,12 @@ mysqli_close($conexion);
                     </ul>
                   </div>
                   <!-- RD Navbar Search-->
+                   <div class="rd-navbar-search">
+                    <button class="user"><span><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                      <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1"/>
+                    </svg></span></button>
+                  </div>
+
                   <div class="rd-navbar-search">
                     <button class="user"><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
@@ -140,7 +146,6 @@ mysqli_close($conexion);
                     <h2><?php echo $juego->getNombre(); ?></h2>
                     <p class="card-text text-muted"><b>Rating: </b><?php echo $juego->getRating(); ?></p>
                 </div>
-                
 
                 <div class="col-md-4 ml-4">
                 <p class="card-text"><small class="text-muted"><b>Fecha de lanzamiento: </b><?php echo $juego->getFechaLanzamiento(); ?></small></p>
@@ -160,6 +165,10 @@ mysqli_close($conexion);
                             }
                             ?>
                             </small></p>
+                </div>
+
+                <div class="col-md-2"> 
+                  <button class="button button-lg button-primary">Agregar a favoritos</button>
                 </div>
                     
                 <div class="col-md-10 pb-2">
