@@ -1,17 +1,11 @@
 <?php
 
-$hrefUsuario;
-$hrefFavoritos;
+include_once "function/login/loginFunction.php";
 
-session_start();
+$hrefUsuario = loginPerfil();
+$hrefFavoritos = loginFavoritos();
+$bienvenido = bienvenido();
 
-if(isset($_SESSION["login"]) && $_SESSION["login"] == true) {
-  $hrefUsuario = "perfil.php";
-  $hrefFavoritos = "favoritos.php";
-} else {
-  $hrefUsuario = "login.php";
-  $hrefFavoritos = "login.php";
-}
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +55,7 @@ if(isset($_SESSION["login"]) && $_SESSION["login"] == true) {
                     <ul class="rd-navbar-nav">
                       <li class="rd-nav-item active" id="index"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
-                      <li class="rd-nav-item" id="info"><a class="rd-nav-link" href="info.html">Info</a>
+                      <li class="rd-nav-item" id="info"><a class="rd-nav-link" href="info.php">Info</a>
                       </li>
                       <li class="rd-nav-item" id="explorar"><a class="rd-nav-link" href="explorar.php">Explorar</a>
                       </li>
@@ -77,7 +71,7 @@ if(isset($_SESSION["login"]) && $_SESSION["login"] == true) {
                   <div class="rd-navbar-search">
                     <a class="user text-white" href="<?php echo $hrefUsuario ?>"><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                    </svg></span></a>
+                    </svg></span> <?php echo $bienvenido ?></a>
                   </div>
                 </div>
               </div>

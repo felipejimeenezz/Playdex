@@ -1,10 +1,6 @@
 <?php
 
-include_once "function/BDD/connection_BDD.php";
-include_once "class/juego.php";
 include_once "function/login/loginFunction.php";
-
-$conexion = connect_bbdd();
 
 $hrefUsuario = loginPerfil();
 $hrefFavoritos = loginFavoritos();
@@ -15,7 +11,7 @@ $bienvenido = bienvenido();
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
-    <title>Playdex - Explorar</title>
+    <title>Playdex - Info</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,9 +55,9 @@ $bienvenido = bienvenido();
                     <ul class="rd-navbar-nav">
                       <li class="rd-nav-item" id="index"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
-                      <li class="rd-nav-item" id="info"><a class="rd-nav-link" href="info.php">Info</a>
+                      <li class="rd-nav-item active" id="info"><a class="rd-nav-link" href="info.html">Info</a>
                       </li>
-                      <li class="rd-nav-item active" id="explorar"><a class="rd-nav-link" href="explorar.php">Explorar</a>
+                      <li class="rd-nav-item" id="explorar"><a class="rd-nav-link" href="explorar.php">Explorar</a>
                       </li>
                     </ul>
                   </div>
@@ -83,114 +79,84 @@ $bienvenido = bienvenido();
           </nav>
         </div>
       </header>
-
-      <section class="section section-bredcrumbs" style="position: relative; overflow: hidden;">
-        <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-          <source src="videos/explorarfondo.mp4" type="video/mp4">
-        </video>
-
-        <div class="container context-dark breadcrumb-wrapper text-left" style="position: relative;">
-          <h1>Explorar</h1>
+      
+      <!-- Breadcrumbs -->
+      <section class="section section-bredcrumbs" style="background: url(img/banner-info.jpg) no-repeat center / cover">
+        <div class="container context-dark breadcrumb-wrapper text-left">
+          <h1>Sobre Playdex</h1>
           <br>
         </div>
       </section>
 
-      <div class="containerExplorar bg-gray-100">
-
-        <div class="row justify-content-center">
-          <aside class="sidebar col-md-2">
-            <h5 class="text-center"><b>FILTROS</b></h5>
-              <div class="filtros mt-4">
-                <div class="tituloFiltros">
-                  <h6 class="text-center text-white">Géneros</h6>
-                </div>
-
-                <?php
-                $generos = mysqli_query($conexion, "SELECT * FROM `genero`");
-                foreach ($generos as $genero) {
-                  $id_genero = $genero['id'];
-                  $nombre = $genero['nombre'];
-                ?>
-                <div class="form-check ml-2">
-                  <input class="form-check-input" value="<?php echo $id_genero ?>" type="checkbox" value="">
-                  <label class="form-check-label" for="flexCheckDefault"><?php echo $nombre ?></label>
-                </div>
-                <?php
-                }
-                ?>
-
-              </div>
-
-              <div class="filtros mt-4">
-
-                  <div class="tituloFiltros">
-                    <h6 class="text-center text-white">Plataformas</h6>
-                  </div>
-
-                  <?php
-                  $plataformas = mysqli_query($conexion, "SELECT * FROM `plataforma`");
-                  foreach ($plataformas as $plataforma) {
-                    $id_plataforma = $plataforma['id'];
-                    $nombre = $plataforma['nombre'];
-                  ?>
-                  <div class="form-check ml-2">
-                    <input class="form-check-input" value="<?php echo $id_plataforma ?>" type="checkbox" value="">
-                    <label class="form-check-label" for="flexCheckDefault"><?php echo $nombre ?></label>
-                  </div>
-                  <?php
-                  }
-                  ?>
-
-              </div>
-          </aside>
-
-          <div class="col-md-10 p-2">
-            <div class="containerJuegos">
-              
-            <?php
-            
-            $juegos = mysqli_query($conexion, "SELECT * FROM `juego`");
-
-            foreach ($juegos as $juego) {
-              $id_juego = $juego['id'];
-              $portada = $juego['url_img'];
-              $nombre = $juego['nombre'];
-
-            ?>
-            <div class="juego" id="<?php echo $id_juego ?>">
-              <a href="juegoinfo.php?id=<?php echo $id_juego; ?>">
-                <img src="<?php echo $portada; ?>" alt="<?php echo $nombre; ?>">
-                <h5 class="text-center"><?php echo $nombre; ?></h5>
-              </a>
+      <!-- Join Our Team-->
+      <section class="section section-lg custom-image-section">
+        <div class="container relative-container">
+          <div class="row row-30 row-md-60 justify-content-between">
+            <div class="col-md-12">
+              <h2>¿Qué es Playdex?</h2>
             </div>
-            <?php
-            }
-            ?>
-
+            <div class="col-md-12">
+              <div class="heading-6">Playdex es una página web que permite a los usuarios consultar videojuegos de diversos géneros, plataformas y características, todo a través de una interfaz intuitiva, amigable y cómoda. 
+              </div>
+              <br>
+              <div class="heading-6">
+                Su principal objetivo es ofrecer una herramienta útil para aquellos que quieran consultar todo tipo de información de algún videojuego en el que esté interesado, además de que permite, a través de una función en el perfil de cada usuario, guardar los juegos en colecciones para que el usuario los gestione como quiera y para lo que quiera.
+              </div>
+              <br>
+              <div class="heading-6">
+                La web facilita la búsqueda de juegos, el filtrado de resultados y el acceso a información detallada sobre cada uno, como las plataformas en las que están disponibles, imágenes, fechas de lanzamiento, etc.
+              </div>
+              <br>
+              <div class="heading-6">
+                Los usuarios pueden registrarse e iniciar sesión, lo que les permite guardar los juegos que les interesen en diferentes colecciones. Todo esto se logra gracias a la API de <a href="https://rawg.io/apidocs" style="text-decoration: underline;">RAWG</a>, una base de datos de videojuegos que ofrece información confiable.
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-      </div>
+      <!-- Tecnología -->
+      <section class="section section-lg bg-gray-100">
+        <div class="container text-center">
+          <h2 class="custom-title"><span>Tecnología utilizada:</span></h2>
+          
+          <div class="row">
+            <div class="col-md-2">
+              <div class="icon-box">
+                <div class="icon-box-icon"><img src="img/tech/html.png" alt="" width="100" height="100"/></div>
+              </div>
+            </div>
+            
+            <div class="col-md-2">
+              <div class="icon-box">
+                <div class="icon-box-icon"><img src="img/tech/css.png" alt="" width="100" height="100"/></div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="icon-box">
+                <div class="icon-box-icon"><img src="img/tech/bootstrap.png" alt="" width="100" height="100"/></div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="icon-box">
+                <div class="icon-box-icon"><img src="img/tech/js.png" alt="" width="100" height="100"/></div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="icon-box">
+                <div class="icon-box-icon"><img src="img/tech/php.png" alt="" width="100" height="100"/></div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="icon-box">
+                <div class="icon-box-icon"><img src="img/tech/mysql.webp" alt="" width="100" height="100"/></div>
+              </div>
+            </div>
+        </div>
+      </section>
 
-
-      <!--
-<div class="rd-navbar-search">
-                    <button class="rd-navbar-search-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-search"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                    </svg></span></button>
-                    <form class="rd-search" action="#" method="GET">
-                      <div class="form-wrap">
-                        <label class="form-label" for="rd-navbar-search-form-input">Search</label>
-                        <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
-                        <div class="rd-search-results-live" id="rd-search-results-live"></div>
-                      </div>
-                      <button class="rd-search-form-submit mdi mdi-magnify" type="submit"></button>
-                    </form>
-  </div> -->
-
-        <!-- Page Footer-->
-        <footer class="section footer-2">
+      <!-- Page Footer-->
+      <footer class="section footer-2">
         <div class="container">
           <div class="row row-40">
             <div class="col-md-6 col-lg-6"><a class="footer-logo" href="index.html"><img src="img/logo.png" alt="" width="180" height="26"/></a>

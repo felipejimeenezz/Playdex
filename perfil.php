@@ -1,21 +1,25 @@
 <?php
 
-include_once "function/BDD/connection_BDD.php";
-include_once "class/juego.php";
 include_once "function/login/loginFunction.php";
-
-$conexion = connect_bbdd();
 
 $hrefUsuario = loginPerfil();
 $hrefFavoritos = loginFavoritos();
 $bienvenido = bienvenido();
+
+if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
+    $user = $_SESSION['nombre'];
+    $pass = $_SESSION['contrasena'];
+
+    $consulta = "SELECT * FROM `usuario` WHERE `nombre` = '$user' AND `contrasena` = '$pass'";
+    $extraido = consultaUsuarios($consulta);
+}
 
 ?>
 
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
-    <title>Playdex - Explorar</title>
+    <title>Playdex - Perfil</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,7 +46,8 @@ $bienvenido = bienvenido();
       <header class="section page-header">
         <!-- RD Navbar-->
         <div class="rd-navbar-wrap rd-navbar-absolute">
-          <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+          <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true" style="background: #111111;
+    box-shadow: 0 0 2px 3px rgba(0, 0, 0, 0.2);">
             <div class="rd-navbar-main-outer">
               <div class="rd-navbar-main">
                 <!-- RD Navbar Panel-->
@@ -57,11 +62,11 @@ $bienvenido = bienvenido();
                   <div class="rd-navbar-nav-wrap">
                     <!-- RD Navbar Nav-->
                     <ul class="rd-navbar-nav">
-                      <li class="rd-nav-item" id="index"><a class="rd-nav-link" href="index.php">Home</a>
+                      <li class="rd-nav-item active" id="index"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
                       <li class="rd-nav-item" id="info"><a class="rd-nav-link" href="info.php">Info</a>
                       </li>
-                      <li class="rd-nav-item active" id="explorar"><a class="rd-nav-link" href="explorar.php">Explorar</a>
+                      <li class="rd-nav-item" id="explorar"><a class="rd-nav-link" href="explorar.php">Explorar</a>
                       </li>
                     </ul>
                   </div>
@@ -84,113 +89,52 @@ $bienvenido = bienvenido();
         </div>
       </header>
 
-      <section class="section section-bredcrumbs" style="position: relative; overflow: hidden;">
-        <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
-          <source src="videos/explorarfondo.mp4" type="video/mp4">
-        </video>
-
-        <div class="container context-dark breadcrumb-wrapper text-left" style="position: relative;">
-          <h1>Explorar</h1>
-          <br>
-        </div>
-      </section>
-
-      <div class="containerExplorar bg-gray-100">
-
-        <div class="row justify-content-center">
-          <aside class="sidebar col-md-2">
-            <h5 class="text-center"><b>FILTROS</b></h5>
-              <div class="filtros mt-4">
-                <div class="tituloFiltros">
-                  <h6 class="text-center text-white">Géneros</h6>
-                </div>
-
-                <?php
-                $generos = mysqli_query($conexion, "SELECT * FROM `genero`");
-                foreach ($generos as $genero) {
-                  $id_genero = $genero['id'];
-                  $nombre = $genero['nombre'];
-                ?>
-                <div class="form-check ml-2">
-                  <input class="form-check-input" value="<?php echo $id_genero ?>" type="checkbox" value="">
-                  <label class="form-check-label" for="flexCheckDefault"><?php echo $nombre ?></label>
-                </div>
-                <?php
-                }
-                ?>
-
-              </div>
-
-              <div class="filtros mt-4">
-
-                  <div class="tituloFiltros">
-                    <h6 class="text-center text-white">Plataformas</h6>
-                  </div>
-
-                  <?php
-                  $plataformas = mysqli_query($conexion, "SELECT * FROM `plataforma`");
-                  foreach ($plataformas as $plataforma) {
-                    $id_plataforma = $plataforma['id'];
-                    $nombre = $plataforma['nombre'];
-                  ?>
-                  <div class="form-check ml-2">
-                    <input class="form-check-input" value="<?php echo $id_plataforma ?>" type="checkbox" value="">
-                    <label class="form-check-label" for="flexCheckDefault"><?php echo $nombre ?></label>
-                  </div>
-                  <?php
-                  }
-                  ?>
-
-              </div>
-          </aside>
-
-          <div class="col-md-10 p-2">
-            <div class="containerJuegos">
-              
-            <?php
-            
-            $juegos = mysqli_query($conexion, "SELECT * FROM `juego`");
-
-            foreach ($juegos as $juego) {
-              $id_juego = $juego['id'];
-              $portada = $juego['url_img'];
-              $nombre = $juego['nombre'];
-
-            ?>
-            <div class="juego" id="<?php echo $id_juego ?>">
-              <a href="juegoinfo.php?id=<?php echo $id_juego; ?>">
-                <img src="<?php echo $portada; ?>" alt="<?php echo $nombre; ?>">
-                <h5 class="text-center"><?php echo $nombre; ?></h5>
-              </a>
+      <!-- Page Content-->
+       <section class="vh-100 pt-5" style="background-color: #f4f5f7;">
+  <div class="container py-5 h-100 pt-5">
+    <div class="row d-flex justify-content-center align-items-center h-100 pt-5">
+      <div class="col col-lg-6 mb-4 mb-lg-0 pt-4">
+        <div class="card mb-3" style="border-radius: .5rem;">
+          <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center text-white"
+              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+              <img src="img/person-circle.svg"
+                alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+              <h5><?php echo $extraido['nombre'] ?></h5>
             </div>
-            <?php
-            }
-            ?>
-
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h6>Información</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Email</h6>
+                    <p class="text-muted"><?php echo $extraido['email'] ?></p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Contraseña</h6>
+                    <p class="text-muted"><?php echo $extraido['contrasena'] ?></p>
+                  </div>
+                </div>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <form method="POST" action="function/login/cerrarSesion.php">
+                        <button type="submit" class="btn btn-dark">Cerrar sesión</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
+    </div>
+  </div>
+</section>
 
-
-      <!--
-<div class="rd-navbar-search">
-                    <button class="rd-navbar-search-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-search"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                    </svg></span></button>
-                    <form class="rd-search" action="#" method="GET">
-                      <div class="form-wrap">
-                        <label class="form-label" for="rd-navbar-search-form-input">Search</label>
-                        <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
-                        <div class="rd-search-results-live" id="rd-search-results-live"></div>
-                      </div>
-                      <button class="rd-search-form-submit mdi mdi-magnify" type="submit"></button>
-                    </form>
-  </div> -->
-
-        <!-- Page Footer-->
-        <footer class="section footer-2">
+      <!-- Page Footer-->
+      <footer class="section footer-2">
         <div class="container">
           <div class="row row-40">
             <div class="col-md-6 col-lg-6"><a class="footer-logo" href="index.html"><img src="img/logo.png" alt="" width="180" height="26"/></a>

@@ -1,7 +1,37 @@
+<?php
+
+include_once "function/login/loginFunction.php";
+include_once "function/buscarFavoritos.php";
+include_once "function/buscarJuegoPorID.php";
+
+$hrefUsuario = loginPerfil();
+$hrefFavoritos = loginFavoritos();
+$bienvenido = bienvenido();
+
+if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
+    $user = $_SESSION['nombre'];
+    $pass = $_SESSION['contrasena'];
+
+    $consulta = "SELECT * FROM `usuario` WHERE `nombre` = '$user' AND `contrasena` = '$pass'";
+    $extraido = consultaUsuarios($consulta);
+    $id = $extraido['id'];
+}
+
+$idJuegosFavoritos = buscarFavoritos($id);
+$idJuego = [];
+foreach ($idJuegosFavoritos as $arrayId) {
+    foreach ($arrayId as $id) {
+        $idJuego[] = $id;
+    }
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
   <head>
-    <title>Playdex - Info</title>
+    <title>Playdex - Favoritos</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,7 +58,8 @@
       <header class="section page-header">
         <!-- RD Navbar-->
         <div class="rd-navbar-wrap rd-navbar-absolute">
-          <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+          <nav class="rd-navbar rd-navbar-creative" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-lg-stick-up-offset="20px" data-xl-stick-up-offset="20px" data-xxl-stick-up-offset="20px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true" style="background: #111111;
+    box-shadow: 0 0 2px 3px rgba(0, 0, 0, 0.2);">
             <div class="rd-navbar-main-outer">
               <div class="rd-navbar-main">
                 <!-- RD Navbar Panel-->
@@ -43,25 +74,25 @@
                   <div class="rd-navbar-nav-wrap">
                     <!-- RD Navbar Nav-->
                     <ul class="rd-navbar-nav">
-                      <li class="rd-nav-item" id="index"><a class="rd-nav-link" href="index.php">Home</a>
+                      <li class="rd-nav-item active" id="index"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
-                      <li class="rd-nav-item active" id="info"><a class="rd-nav-link" href="info.html">Info</a>
+                      <li class="rd-nav-item" id="info"><a class="rd-nav-link" href="info.php">Info</a>
                       </li>
                       <li class="rd-nav-item" id="explorar"><a class="rd-nav-link" href="explorar.php">Explorar</a>
                       </li>
                     </ul>
                   </div>
                   <!-- RD Navbar Search-->
-                   <div class="rd-navbar-search">
-                    <button class="user"><span><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-                      <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1"/>
-                    </svg></span></button>
-                  </div>
-                  
                   <div class="rd-navbar-search">
-                    <button class="user"><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <a class="user text-white" href="<?php echo $hrefFavoritos ?>"><span><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                      <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1"/>
+                    </svg></span></a>
+                  </div>
+
+                  <div class="rd-navbar-search">
+                    <a class="user text-white" href="<?php echo $hrefUsuario ?>"><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                    </svg></span></button>
+                    </svg></span> <?php echo $bienvenido ?></a>
                   </div>
                 </div>
               </div>
@@ -69,81 +100,47 @@
           </nav>
         </div>
       </header>
-      
-      <!-- Breadcrumbs -->
-      <section class="section section-bredcrumbs" style="background: url(img/banner-info.jpg) no-repeat center / cover">
-        <div class="container context-dark breadcrumb-wrapper text-left">
-          <h1>Sobre Playdex</h1>
-          <br>
-        </div>
-      </section>
 
-      <!-- Join Our Team-->
-      <section class="section section-lg custom-image-section">
+      <!-- Page Content-->
+    <section class="section section-lg">
+
         <div class="container relative-container">
-          <div class="row row-30 row-md-60 justify-content-between">
-            <div class="col-md-12">
-              <h2>¿Qué es Playdex?</h2>
-            </div>
-            <div class="col-md-12">
-              <div class="heading-6">Playdex es una página web que permite a los usuarios consultar videojuegos de diversos géneros, plataformas y características, todo a través de una interfaz intuitiva, amigable y cómoda. 
-              </div>
-              <br>
-              <div class="heading-6">
-                Su principal objetivo es ofrecer una herramienta útil para aquellos que quieran consultar todo tipo de información de algún videojuego en el que esté interesado, además de que permite, a través de una función en el perfil de cada usuario, guardar los juegos en colecciones para que el usuario los gestione como quiera y para lo que quiera.
-              </div>
-              <br>
-              <div class="heading-6">
-                La web facilita la búsqueda de juegos, el filtrado de resultados y el acceso a información detallada sobre cada uno, como las plataformas en las que están disponibles, imágenes, fechas de lanzamiento, etc.
-              </div>
-              <br>
-              <div class="heading-6">
-                Los usuarios pueden registrarse e iniciar sesión, lo que les permite guardar los juegos que les interesen en diferentes colecciones. Todo esto se logra gracias a la API de <a href="https://rawg.io/apidocs" style="text-decoration: underline;">RAWG</a>, una base de datos de videojuegos que ofrece información confiable.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            <div class="row row-30 row-md-60 mt-4">
+                <h2>Juegos guardados</h2>
 
-      <!-- Tecnología -->
-      <section class="section section-lg bg-gray-100">
-        <div class="container text-center">
-          <h2 class="custom-title"><span>Tecnología utilizada:</span></h2>
-          
-          <div class="row">
-            <div class="col-md-2">
-              <div class="icon-box">
-                <div class="icon-box-icon"><img src="img/tech/html.png" alt="" width="100" height="100"/></div>
-              </div>
-            </div>
-            
-            <div class="col-md-2">
-              <div class="icon-box">
-                <div class="icon-box-icon"><img src="img/tech/css.png" alt="" width="100" height="100"/></div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="icon-box">
-                <div class="icon-box-icon"><img src="img/tech/bootstrap.png" alt="" width="100" height="100"/></div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="icon-box">
-                <div class="icon-box-icon"><img src="img/tech/js.png" alt="" width="100" height="100"/></div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="icon-box">
-                <div class="icon-box-icon"><img src="img/tech/php.png" alt="" width="100" height="100"/></div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="icon-box">
-                <div class="icon-box-icon"><img src="img/tech/mysql.webp" alt="" width="100" height="100"/></div>
-              </div>
+                <div class="col-md-12">
+                    <div class="row row-30">
+                        <div class="containerJuegos">
+                            <?php
+                                if (empty($idJuegosFavoritos)) {
+                                    echo "<h3 class='text-center'>No tienes juegos favoritos</h3>";
+                                } else {
+                                    foreach ($idJuego as $juego) {
+                                    $extraido = mostrarJuegos($juego);
+
+                                    $portada = $extraido['url_img'];
+                                    $nombre = $extraido['nombre'];
+                            ?>
+
+                                <div class="juego" id="<?php echo $juego ?>" style="padding-right: 10px;">
+                                <a href="juegoinfo.php?id=<?php echo $juego; ?>">
+                                    <img src="<?php echo $portada; ?>" alt="<?php echo $nombre; ?>" style="width: 100%; height: auto;">
+                                    <h5 class="text-center"><?php echo $nombre; ?></h5>
+                                </a>
+                                </div>
+
+                                <?php
+                                }
+                                }
+                                ?>
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-      </section>
+    
+    </section>
 
       <!-- Page Footer-->
       <footer class="section footer-2">

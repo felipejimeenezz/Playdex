@@ -6,6 +6,7 @@ include_once "class/juego.php";
 include_once "class/screenshot.php";
 include_once "class/genero.php";
 include_once "class/plataforma.php";
+include_once "function/login/loginFunction.php";
 
 $conexion = connect_bbdd();
 
@@ -13,6 +14,12 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $juegoResultado = mostrarJuegos($id);
 }
+
+$hrefUsuario = loginPerfil();
+$hrefFavoritos = loginFavoritos();
+$bienvenido = bienvenido();
+
+$id_usuario = $_SESSION['id'];
 
 $nombre = $juegoResultado['nombre'];
 $fecha_lanzamiento = $juegoResultado['fecha_lanzamiento'];
@@ -56,8 +63,6 @@ WHERE id_juego = $id"
 while ($s = mysqli_fetch_assoc($screenshot)) {
     $juego->addScreenshot(new Screenshot($s['id'], $s['url'], $id));
 }
-
-mysqli_close($conexion);
 
 ?>
 
@@ -112,23 +117,23 @@ mysqli_close($conexion);
                     <ul class="rd-navbar-nav">
                       <li class="rd-nav-item" id="index"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
-                      <li class="rd-nav-item" id="info"><a class="rd-nav-link" href="info.html">Info</a>
+                      <li class="rd-nav-item" id="info"><a class="rd-nav-link" href="info.php">Info</a>
                       </li>
                       <li class="rd-nav-item active" id="explorar"><a class="rd-nav-link" href="explorar.php">Explorar</a>
                       </li>
                     </ul>
                   </div>
                   <!-- RD Navbar Search-->
-                   <div class="rd-navbar-search">
-                    <button class="user"><span><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                  <div class="rd-navbar-search">
+                    <a class="user text-white" href="<?php echo $hrefFavoritos ?>"><span><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
                       <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1"/>
-                    </svg></span></button>
+                    </svg></span></a>
                   </div>
 
                   <div class="rd-navbar-search">
-                    <button class="user"><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <a class="user text-white" href="<?php echo $hrefUsuario ?>"><span><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                    </svg></span></button>
+                    </svg></span> <?php echo $bienvenido ?></a>
                   </div>
                 </div>
               </div>
@@ -168,7 +173,10 @@ mysqli_close($conexion);
                 </div>
 
                 <div class="col-md-2"> 
-                  <button class="button button-lg button-primary">Agregar a favoritos</button>
+                  <form>
+                      <input type="hidden" name="id_juego" value="<?php echo $juego->getId(); ?>">
+                      <button type="submit"class="button button-lg button-primary">Agregar a favoritos</button>
+                  </form>
                 </div>
                     
                 <div class="col-md-10 pb-2">

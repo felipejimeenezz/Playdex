@@ -47,6 +47,9 @@ if(isset($_POST["username"]) && (isset($_POST["password"])) && (isset($_POST["em
           <div class="row g-0">
             <div class="d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
+                <div class="pt-1 mb-4">
+                    <button onclick="window.history.back();" class="btn btn-outline-secondary btn-lg btn-block">Volver</button>
+                </div>
 
                 <form method="POST" action="register.php">
 

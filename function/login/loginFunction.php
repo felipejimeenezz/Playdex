@@ -24,7 +24,6 @@ function login ($user, $pass, $extraido){
         $_SESSION['login'] = true;
         $_SESSION['nombre'] = $user;
         $_SESSION['contrasena'] = $pass;
-        $_SESSION['id'] = $extraido['id'];
         header("Location: index.php");
         exit;
     } else {
@@ -42,4 +41,51 @@ function register ($user, $email, $pass) {
         echo "Error al registrar el usuario: " . mysqli_error($conexion);
     }
 }
+
+function loginPerfil() {
+    $hrefUsuario = "";
+
+    session_start();
+
+    if(isset($_SESSION["login"]) && $_SESSION["login"] == true) {
+    $hrefUsuario = "perfil.php";
+    } else {
+    $hrefUsuario = "login.php";
+    }
+
+    return $hrefUsuario;
+}
+
+function loginFavoritos() {
+    $hrefFavoritos = "";
+
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+
+    if(isset($_SESSION["login"]) && $_SESSION["login"] == true) {
+    $hrefFavoritos = "favoritos.php";
+    } else {
+    $hrefFavoritos = "login.php";
+    }
+
+    return $hrefFavoritos;
+}
+
+function bienvenido() {
+    $bienvenido = "";
+
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+
+    if(isset($_SESSION["login"]) && $_SESSION["login"] == true) {
+        $bienvenido = "Bienvenido, " . $_SESSION['nombre'];
+    } else {
+        $bienvenido = "Iniciar sesión";
+    }
+
+    return $bienvenido;
+}
+
 ?>
