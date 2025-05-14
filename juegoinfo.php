@@ -19,7 +19,14 @@ $hrefUsuario = loginPerfil();
 $hrefFavoritos = loginFavoritos();
 $bienvenido = bienvenido();
 
-$id_usuario = $_SESSION['id'];
+if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
+    $user = $_SESSION['nombre'];
+    $pass = $_SESSION['contrasena'];
+
+    $consulta = "SELECT * FROM `usuario` WHERE `nombre` = '$user' AND `contrasena` = '$pass'";
+    $extraido = consultaUsuarios($consulta);
+    $id_usuario = $extraido['id'];
+}
 
 $nombre = $juegoResultado['nombre'];
 $fecha_lanzamiento = $juegoResultado['fecha_lanzamiento'];
@@ -62,6 +69,15 @@ WHERE id_juego = $id"
 
 while ($s = mysqli_fetch_assoc($screenshot)) {
     $juego->addScreenshot(new Screenshot($s['id'], $s['url'], $id));
+}
+
+//Comprobar si el juego está en favoritos
+$enFavoritos = false;
+$comprobar = "SELECT * FROM `favoritos` WHERE `id_usuario` = '$id_usuario' AND `id_juego` = '$id'";
+
+if ($id_usuario && $id) {
+  $resultado = mysqli_query($conexion, $comprobar);
+  $enFavoritos = mysqli_num_rows($resultado) > 0;
 }
 
 ?>
@@ -173,9 +189,9 @@ while ($s = mysqli_fetch_assoc($screenshot)) {
                 </div>
 
                 <div class="col-md-2"> 
-                  <form>
+                  <form action="function/favoritos/toggleFavoritos.php" method="POST">
                       <input type="hidden" name="id_juego" value="<?php echo $juego->getId(); ?>">
-                      <button type="submit"class="button button-lg button-primary">Agregar a favoritos</button>
+                      <button type="submit"class="button button-lg button-primary"><?php if ($enFavoritos) { echo "En favoritos"; } else { echo "Agregar a favoritos"; }?></button>
                   </form>
                 </div>
                     

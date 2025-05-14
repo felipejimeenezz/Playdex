@@ -1,6 +1,7 @@
 <?php
 
-include_once "BDD/connection_BDD.php";
+include_once(__DIR__ . "/../BDD/connection_BDD.php");
+
 
 function buscarFavoritos($id) {
 

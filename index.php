@@ -137,7 +137,7 @@ $bienvenido = bienvenido();
             <div class="box-cta-inner">
               <h3>¿No tienes una cuenta aún? Registrate y empieza a explorar!</h3>
             </div>
-            <div class="box-cta-inner"><a class="button button-md button-white" href="#">Registrarse</a></div>
+            <div class="box-cta-inner"><a class="button button-md button-white" href="register.php">Registrarse</a></div>
           </div>
         </div>
       </section>

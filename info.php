@@ -100,7 +100,7 @@ $bienvenido = bienvenido();
               </div>
               <br>
               <div class="heading-6">
-                Su principal objetivo es ofrecer una herramienta útil para aquellos que quieran consultar todo tipo de información de algún videojuego en el que esté interesado, además de que permite, a través de una función en el perfil de cada usuario, guardar los juegos en colecciones para que el usuario los gestione como quiera y para lo que quiera.
+                Su principal objetivo es ofrecer una herramienta útil para aquellos que quieran consultar todo tipo de información de algún videojuego en el que esté interesado, además de que permite, a través de una función en el perfil de cada usuario, guardar los juegos en una colección de favoritos para que el usuario los gestione como quiera y para lo que quiera.
               </div>
               <br>
               <div class="heading-6">
@@ -108,7 +108,7 @@ $bienvenido = bienvenido();
               </div>
               <br>
               <div class="heading-6">
-                Los usuarios pueden registrarse e iniciar sesión, lo que les permite guardar los juegos que les interesen en diferentes colecciones. Todo esto se logra gracias a la API de <a href="https://rawg.io/apidocs" style="text-decoration: underline;">RAWG</a>, una base de datos de videojuegos que ofrece información confiable.
+                Los usuarios pueden registrarse e iniciar sesión, lo que les permite guardar los juegos que les interesen en favoritos. Todo esto se logra gracias a la API de <a href="https://rawg.io/apidocs" style="text-decoration: underline;">RAWG</a>, una base de datos de videojuegos que ofrece información confiable.
               </div>
             </div>
           </div>

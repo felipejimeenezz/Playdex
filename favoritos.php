@@ -1,7 +1,7 @@
 <?php
 
 include_once "function/login/loginFunction.php";
-include_once "function/buscarFavoritos.php";
+include_once "function/favoritos/buscarFavoritos.php";
 include_once "function/buscarJuegoPorID.php";
 
 $hrefUsuario = loginPerfil();
@@ -74,7 +74,7 @@ foreach ($idJuegosFavoritos as $arrayId) {
                   <div class="rd-navbar-nav-wrap">
                     <!-- RD Navbar Nav-->
                     <ul class="rd-navbar-nav">
-                      <li class="rd-nav-item active" id="index"><a class="rd-nav-link" href="index.php">Home</a>
+                      <li class="rd-nav-item" id="index"><a class="rd-nav-link" href="index.php">Home</a>
                       </li>
                       <li class="rd-nav-item" id="info"><a class="rd-nav-link" href="info.php">Info</a>
                       </li>
