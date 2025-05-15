@@ -3,6 +3,8 @@
 include_once "function/BDD/connection_BDD.php";
 include_once "class/juego.php";
 include_once "function/login/loginFunction.php";
+include_once "class/genero.php";
+include_once "class/plataforma.php";
 
 $conexion = connect_bbdd();
 
@@ -85,7 +87,7 @@ $bienvenido = bienvenido();
       </header>
 
       <section class="section section-bredcrumbs" style="position: relative; overflow: hidden;">
-        <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+        <video autoplay muted loop playsinline disablepictureinpicture style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
           <source src="videos/explorarfondo.mp4" type="video/mp4">
         </video>
 
@@ -112,7 +114,7 @@ $bienvenido = bienvenido();
                   $nombre = $genero['nombre'];
                 ?>
                 <div class="form-check ml-2">
-                  <input class="form-check-input" value="<?php echo $id_genero ?>" type="checkbox" value="">
+                  <input class="form-check-input generos" value="<?php echo $id_genero ?>" type="checkbox" value="">
                   <label class="form-check-label" for="flexCheckDefault"><?php echo $nombre ?></label>
                 </div>
                 <?php
@@ -134,13 +136,17 @@ $bienvenido = bienvenido();
                     $nombre = $plataforma['nombre'];
                   ?>
                   <div class="form-check ml-2">
-                    <input class="form-check-input" value="<?php echo $id_plataforma ?>" type="checkbox" value="">
+                    <input class="form-check-input plataformas" value="<?php echo $id_plataforma ?>" type="checkbox" value="">
                     <label class="form-check-label" for="flexCheckDefault"><?php echo $nombre ?></label>
                   </div>
                   <?php
                   }
                   ?>
 
+              </div>
+
+              <div class="d-flex justify-content-center mr-2 mt-4">
+                <button id="btnFiltro" class="button button-primary mb-4">Aplicar</button>
               </div>
           </aside>
 
@@ -155,9 +161,46 @@ $bienvenido = bienvenido();
               $id_juego = $juego['id'];
               $portada = $juego['url_img'];
               $nombre = $juego['nombre'];
+              $fecha_lanzamiento = $juego['fecha_lanzamiento'];
+              $rating = $juego['rating'];
+              $descripcion = $juego['descripcion'];
+
+              $j = new Juego($id_juego, $nombre, $fecha_lanzamiento, $portada, $rating, $descripcion);
+
+              //Generos
+              $generos = mysqli_query($conexion,
+              "SELECT g.id, g.nombre
+              FROM genero g
+              JOIN juego_genero jg ON g.id = jg.id_genero
+              WHERE jg.id_juego = $id_juego"
+              );
+
+              while ($g = mysqli_fetch_assoc($generos)) {
+                  $j->addGenero(new Genero($g['id'], $g['nombre']));
+              }
+
+              //Plataformas
+              $plataformas = mysqli_query($conexion,
+              "SELECT p.id, p.nombre
+              FROM plataforma p
+              JOIN juego_plataforma jp ON p.id = jp.id_plataforma
+              WHERE jp.id_juego = $id_juego"
+              );
+
+              while ($p = mysqli_fetch_assoc($plataformas)) {
+                  $j->addPlataforma(new Plataforma($p['id'], $p['nombre']));
+              }
 
             ?>
-            <div class="juego" id="<?php echo $id_juego ?>">
+            <div class="juego" generos="<?php
+                            foreach ($j->getGeneros() as $genero) {
+                                echo $genero->getId() . " ";
+                            }
+                          ?>" plataformas="<?php
+                            foreach ($j->getPlataformas() as $plataforma) {
+                            echo $plataforma->getId() . " ";
+                            }
+                            ?>" id="<?php echo $id_juego ?>">
               <a href="juegoinfo.php?id=<?php echo $id_juego; ?>">
                 <img src="<?php echo $portada; ?>" alt="<?php echo $nombre; ?>">
                 <h5 class="text-center"><?php echo $nombre; ?></h5>
