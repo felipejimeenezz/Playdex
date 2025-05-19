@@ -26,6 +26,8 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
     $consulta = "SELECT * FROM `usuario` WHERE `nombre` = '$user' AND `contrasena` = '$pass'";
     $extraido = consultaUsuarios($consulta);
     $id_usuario = $extraido['id'];
+} else {
+    $id_usuario = null;
 }
 
 $nombre = $juegoResultado['nombre'];

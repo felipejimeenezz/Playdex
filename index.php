@@ -121,8 +121,8 @@ $bienvenido = bienvenido();
             </div>
             <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 wow fadeInLeft"><div class="variety-box-wrapper">
                 <figure class="variety-box">
-                  <figcaption><span>Crea</span>
-                    <p>Colecciones y guarda tus juegos favoritos.</p>
+                  <figcaption><span>Guarda</span>
+                    <p>Tus juegos favoritos!</p>
                   </figcaption>
                 </figure></div>
             </div> 

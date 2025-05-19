@@ -6,7 +6,8 @@ include_once "../login/loginFunction.php";
     session_start();
 
     if (!isset($_SESSION["login"]) || $_SESSION["login"] != true) {
-        die("Debes iniciar sesión.");
+        header("Location: ../../login.php");
+        exit;
     } else {
         $user = $_SESSION['nombre'];
         $pass = $_SESSION['contrasena'];
