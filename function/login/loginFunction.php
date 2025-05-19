@@ -2,6 +2,7 @@
 
 include_once "/xampp/htdocs/Playdex/function/BDD/connection_BDD.php";
 
+// Función para comprobar si el usuario existe en la base de datos
 function consultaUsuarios($consulta) {
 
 $conexion = connect_bbdd();
@@ -18,6 +19,7 @@ $usuario = mysqli_query($conexion, $consulta);
     
 }
 
+// Función para iniciar sesión
 function login ($user, $pass, $extraido){
     if ($extraido['nombre'] == $user && $extraido['contrasena'] == $pass) {
         session_start();
@@ -31,6 +33,7 @@ function login ($user, $pass, $extraido){
     }
 }
 
+// Función para registrar un nuevo usuario
 function register ($user, $email, $pass) {
     $conexion = connect_bbdd();
     $consulta = "INSERT INTO `usuario` (`nombre`, `email`, `contrasena`) VALUES ('$user', '$email', '$pass')";
@@ -42,6 +45,7 @@ function register ($user, $email, $pass) {
     }
 }
 
+// Funciones para redirigir a las páginas según el estado de la sesión
 function loginPerfil() {
     $hrefUsuario = "";
 
@@ -72,6 +76,7 @@ function loginFavoritos() {
     return $hrefFavoritos;
 }
 
+// Función para mostrar el mensaje de bienvenida o iniciar sesión
 function bienvenido() {
     $bienvenido = "";
 

@@ -2,6 +2,7 @@
 
 include_once 'BDD/connection_BDD.php';
 
+// Función para buscar un juego por su ID
 function mostrarJuegos ($id) {
     $conexion = connect_bbdd();
 

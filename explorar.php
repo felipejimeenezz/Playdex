@@ -108,6 +108,7 @@ $bienvenido = bienvenido();
                 </div>
 
                 <?php
+                // Obtener los géneros de la base de datos
                 $generos = mysqli_query($conexion, "SELECT * FROM `genero`");
                 foreach ($generos as $genero) {
                   $id_genero = $genero['id'];
@@ -130,6 +131,7 @@ $bienvenido = bienvenido();
                   </div>
 
                   <?php
+                  // Obtener las plataformas de la base de datos
                   $plataformas = mysqli_query($conexion, "SELECT * FROM `plataforma`");
                   foreach ($plataformas as $plataforma) {
                     $id_plataforma = $plataforma['id'];
@@ -155,6 +157,7 @@ $bienvenido = bienvenido();
               
             <?php
             
+            // Obtener todos los juegos de la base de datos
             $juegos = mysqli_query($conexion, "SELECT * FROM `juego`");
 
             foreach ($juegos as $juego) {
@@ -193,6 +196,7 @@ $bienvenido = bienvenido();
 
             ?>
             <div class="juego" generos="<?php
+            // Atributo para almacenar las IDs de los géneros y plataformas
                             foreach ($j->getGeneros() as $genero) {
                                 echo $genero->getId() . " ";
                             }
@@ -215,22 +219,6 @@ $bienvenido = bienvenido();
         </div>
 
       </div>
-
-
-      <!--
-<div class="rd-navbar-search">
-                    <button class="rd-navbar-search-toggle rd-navbar-fixed-element-1" data-rd-navbar-toggle=".rd-navbar-search"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                      <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                    </svg></span></button>
-                    <form class="rd-search" action="#" method="GET">
-                      <div class="form-wrap">
-                        <label class="form-label" for="rd-navbar-search-form-input">Search</label>
-                        <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">
-                        <div class="rd-search-results-live" id="rd-search-results-live"></div>
-                      </div>
-                      <button class="rd-search-form-submit mdi mdi-magnify" type="submit"></button>
-                    </form>
-  </div> -->
 
         <!-- Page Footer-->
         <footer class="section footer-2">

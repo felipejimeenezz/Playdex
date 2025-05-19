@@ -8,6 +8,7 @@ $hrefUsuario = loginPerfil();
 $hrefFavoritos = loginFavoritos();
 $bienvenido = bienvenido();
 
+// Comprobar si el usuario ha iniciado sesión
 if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
     $user = $_SESSION['nombre'];
     $pass = $_SESSION['contrasena'];
@@ -17,6 +18,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
     $id = $extraido['id'];
 }
 
+// Buscar los juegos favoritos del usuario
 $idJuegosFavoritos = buscarFavoritos($id);
 $idJuego = [];
 foreach ($idJuegosFavoritos as $arrayId) {
@@ -112,6 +114,7 @@ foreach ($idJuegosFavoritos as $arrayId) {
                     <div class="row row-30">
                         <div class="containerJuegos">
                             <?php
+                            // Mostrar los juegos favoritos del usuario
                                 if (empty($idJuegosFavoritos)) {
                                     echo "<h3 class='text-center'>No tienes juegos favoritos</h3>";
                                 } else {

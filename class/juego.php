@@ -64,6 +64,7 @@ class Juego {
         return $this->screenshots;
     }
 
+    // Añadir generos, plataformas y screenshots
     public function addGenero(Genero $g) {
         $this->generos[] = $g;
     }

@@ -6,6 +6,7 @@ $hrefUsuario = loginPerfil();
 $hrefFavoritos = loginFavoritos();
 $bienvenido = bienvenido();
 
+// Comprobar si el usuario ha iniciado sesión
 if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
     $user = $_SESSION['nombre'];
     $pass = $_SESSION['contrasena'];

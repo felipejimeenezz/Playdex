@@ -2,6 +2,7 @@
 
 include_once "function/login/loginFunction.php";
 
+// Obtener los datos del formulario de inicio de sesión
 if(isset($_POST["username"]) && (isset($_POST["password"]))) {
     $user=$_POST["username"];
     $pass=$_POST["password"];

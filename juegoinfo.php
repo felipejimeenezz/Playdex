@@ -10,6 +10,7 @@ include_once "function/login/loginFunction.php";
 
 $conexion = connect_bbdd();
 
+//Recuperar el ID del juego de la URL
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $juegoResultado = mostrarJuegos($id);
@@ -19,6 +20,7 @@ $hrefUsuario = loginPerfil();
 $hrefFavoritos = loginFavoritos();
 $bienvenido = bienvenido();
 
+//Comprobar si el usuario está logueado
 if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
     $user = $_SESSION['nombre'];
     $pass = $_SESSION['contrasena'];
@@ -30,6 +32,7 @@ if (isset($_SESSION["login"]) && $_SESSION["login"] == true) {
     $id_usuario = null;
 }
 
+//Crear el objeto Juego con los datos obtenidos
 $nombre = $juegoResultado['nombre'];
 $fecha_lanzamiento = $juegoResultado['fecha_lanzamiento'];
 $url_img = $juegoResultado['url_img'];
