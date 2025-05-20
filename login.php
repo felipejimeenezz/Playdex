@@ -2,6 +2,8 @@
 
 include_once "function/login/loginFunction.php";
 
+$login = "";
+
 // Obtener los datos del formulario de inicio de sesión
 if(isset($_POST["username"]) && (isset($_POST["password"]))) {
     $user=$_POST["username"];
@@ -11,7 +13,7 @@ if(isset($_POST["username"]) && (isset($_POST["password"]))) {
 
     $extraido = consultaUsuarios($consulta);
 
-    login($user, $pass, $extraido);
+    $login = login($user, $pass, $extraido);
     
 }
 
@@ -45,7 +47,7 @@ if(isset($_POST["username"]) && (isset($_POST["password"]))) {
 </head>
 <body>
 
-<section class="vh-100" style="background-color: #212121;">
+<section style="background-color: #212121;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-6">
@@ -64,6 +66,10 @@ if(isset($_POST["username"]) && (isset($_POST["password"]))) {
                   </div>
 
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Iniciar sesión</h5>
+
+                  <?php if (!empty($login)): ?>
+                      <div class="alert alert-danger text-center mb-4"><?php echo $login; ?></div>
+                  <?php endif; ?>
 
                   <div data-mdb-input-init class="form-outline mb-4">
                     <input type="text" id="username" name="username" class="form-control form-control-lg" required/>

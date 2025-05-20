@@ -21,7 +21,7 @@ $usuario = mysqli_query($conexion, $consulta);
 
 // Función para iniciar sesión
 function login ($user, $pass, $extraido){
-    if ($extraido['nombre'] == $user && $extraido['contrasena'] == $pass) {
+    if ($extraido && $extraido['nombre'] == $user && $extraido['contrasena'] == $pass) {
         session_start();
         $_SESSION['login'] = true;
         $_SESSION['nombre'] = $user;
@@ -29,7 +29,7 @@ function login ($user, $pass, $extraido){
         header("Location: index.php");
         exit;
     } else {
-        echo "Nombre o contraseña incorrectos";
+        return "Nombre o contraseña incorrectos";
     }
 }
 

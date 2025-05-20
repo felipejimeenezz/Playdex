@@ -39,7 +39,7 @@ if(isset($_POST["username"]) && (isset($_POST["password"])) && (isset($_POST["em
 </head>
 <body>
 
-<section class="vh-100" style="background-color: #212121;">
+<section style="background-color: #212121;">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-6">
@@ -67,11 +67,13 @@ if(isset($_POST["username"]) && (isset($_POST["password"])) && (isset($_POST["em
                   <div data-mdb-input-init class="form-outline mb-4">
                     <input type="email" id="email" name="email" class="form-control form-control-lg" required/>
                     <label class="form-label" for="email">Email</label>
+                    <span id="errorEmail"></span>
                   </div>
 
                   <div data-mdb-input-init class="form-outline mb-4">
                     <input type="password" id="password" name="password" class="form-control form-control-lg" required/>
                     <label class="form-label" for="password">Contraseña</label>
+                    <span id="errorPassword"></span>
                   </div>
 
                   <div class="pt-1 mb-4">
@@ -91,5 +93,7 @@ if(isset($_POST["username"]) && (isset($_POST["password"])) && (isset($_POST["em
   </div>
 </section>
 
+    <!-- Javascript-->
+    <script src="js/scriptVerificacion.js"></script>
 </body>
 </html>
