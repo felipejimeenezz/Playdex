@@ -1,4 +1,4 @@
-# 🎮 Playdex
+![Logo](https://github.com/felipejimeenezz/Playdex/blob/main/img/logo.PNG)
 
 [![made-with-php](https://img.shields.io/badge/Made%20with-PHP-blue?style=for-the-badge&logo=php)](https://www.php.net/)
 [![built-with-love](https://img.shields.io/badge/Built%20with-Love-red?style=for-the-badge&logo=heart)](https://github.com/felipejimeenezz)
