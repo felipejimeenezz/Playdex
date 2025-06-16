@@ -5,7 +5,7 @@
 
 **Playdex** es una aplicación web desarrollada como proyecto de fin de ciclo de Desarrollo de Aplicaciones Web. Permite consultar, organizar y gestionar videojuegos accediendo a información detallada, plataformas, imágenes y enlaces, integrando la API de RAWG.
 
-![Screenshot de Playdex](https://via.placeholder.com/900x400.png?text=Captura+de+pantalla+del+proyecto)  
+![Screenshot de Playdex](https://github.com/felipejimeenezz/Playdex/blob/main/img/captura.png)  
 <!-- Reemplaza el link de la imagen por una captura real de tu proyecto -->
 
 ---
